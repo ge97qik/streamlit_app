@@ -19,11 +19,17 @@ if uploaded_file is not None:
 
 
 def generate_response(input_text, context):
+    #Define the maximum number of token for model used
+    max_tokens = 128000
     if context:
         # Prepend context to the query
         input_text = context + "\n\n" + input_text
+    
+    # Ensure the total input length does not exceed the maximum allowed tokens
+    if len(input_text) > max_tokens:
+        raise ValueError(f"Input text exceeds the maximum allowed length of {max_tokens} tokens.")
 
-    llm = OpenAI(temperature=0.7, openai_api_key=openai_api_key)
+    llm = OpenAI(temperature=0.7,model="gpt-4-turbo", openai_api_key=openai_api_key)
     response = llm.generate([input_text])  
     return response
 
