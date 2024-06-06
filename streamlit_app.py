@@ -22,10 +22,9 @@ def generate_response(input_text, context):
     if context:
         # Prepend context to the query
         input_text = context + "\n\n" + input_text
-    else:
-        input_text 
+
     llm = OpenAI(temperature=0.7, openai_api_key=openai_api_key)
-    response = llm.generate(input_text)  
+    response = llm.generate([input_text])  
     return response
 
 with st.form('my_form'):
