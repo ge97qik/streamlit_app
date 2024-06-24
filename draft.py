@@ -15,16 +15,9 @@ if "OPENAI_API_KEY" not in os.environ:
     st.error("Please set the OPENAI_API_KEY environment variable.")
     st.stop()
 
-# Load the OpenAI API key from the environment
+#Load the OpenAI API key from the environment
 api_key = os.getenv("OPENAI_API_KEY")
 
-# Ensure the API key is set in the environment
-if "OPENAI_API_KEY" not in os.environ:
-    st.error("Please set the OPENAI_API_KEY environment variable.")
-    st.stop()
-
-# Load the OpenAI API key from the environment
-api_key = os.getenv("OPENAI_API_KEY")
 
 # Load the dataset from Hugging Face
 @st.cache_data
@@ -74,9 +67,9 @@ def process_text_with_langchain(answer, reference, label, chain):
                 highlight_segments["answer"] = [seg.strip().strip('"') for seg in answer_highlights]
                 highlight_segments["reference"] = [seg.strip().strip('"') for seg in reference_highlights]
             else:
-                st.write("Unexpected response format:", response)  # Debugging line for unexpected format
+                st.write("Unexpected response format:", response)  # Debugging
     except Exception as e:
-        st.write("Error parsing response:", e)  # Debugging line to show any parsing errors
+        st.write("Error parsing response:", e)  # Debugging 
 
     return highlight_segments
 
@@ -110,7 +103,7 @@ def display_sample(sample_index, data, chain):
         elif label == 'Contradictory':
             color = "red"
         else:
-            color = "black"  # Default to black if no label
+            color = "white"  # Default 
         
         highlighted_answer = highlight_text_html(answer, highlight_segments.get('answer', []), color)
         st.markdown(highlighted_answer, unsafe_allow_html=True)
@@ -128,18 +121,6 @@ def display_sample(sample_index, data, chain):
 # Main function to display the app
 def main():
     st.title("AttrScore Dataset Visualization")
-
-    # Set background color to white
-    st.markdown(
-        """
-        <style>
-        body {
-            background-color: white;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
 
     # Load data
     data = load_data()
